@@ -1,17 +1,21 @@
-# reference: https://pybit.es/pillow-intro.html
+# reference: https://haptik.ai/tech/putting-text-on-image-using-python/
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import os
 
-current_dir = os.getcwd()
-logo_file = 'logo.png'
+#   Load preferable font
+font = ImageFont.truetype('Roboto-Bold.ttf', size=150)
+#   Choose location of were to write
+(x, y) = (1350, 1250)
+#   Out put color
+color = 'rgb(27, 41, 86)'
 
-for f in os.listdir(current_dir):
-    if f.endswith(".JPG"):
-        img = Image.open(f)
-        logo = Image.open(logo_file)
-        position = (0, (img.height - logo.height))
-        img.paste(logo, position, logo)
-        img.save(f'{f[:-4]}_done.jpg')
-    else:
-        continue
+#   List of names
+attendees = ['attendees 1', 'attendees 2']
+
+#   Loop through names and write/save
+for i in attendees:
+    img = Image.open('certificate.png')
+    draw = ImageDraw.Draw(img)
+    draw.text((x, y), i, fill=color, font=font)
+    img.save(f'{i}_done.png')
